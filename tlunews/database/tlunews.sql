@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table tlunews.categories: ~10 rows (approximately)
+-- Dumping data for table tlunews.categories: ~1categories0 rows (approximately)
 INSERT INTO `categories` (`id`, `name`) VALUES
 	(1, 'Hoffmann\'s Buckwheat'),
 	(2, 'San Diego Coastalcreeper'),
