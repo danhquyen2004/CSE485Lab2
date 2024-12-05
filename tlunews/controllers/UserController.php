@@ -67,8 +67,7 @@ class UserController
                 try {
                     // Sử dụng UserService để lưu thông tin
                     $userService = new UserService();
-                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Mã hóa mật khẩu
-                    $isStored = $userService->store($username, $hashedPassword, $role);
+                    $isStored = $userService->store($username, $password, $role);
 
                     if ($isStored) {
                         $successMessage = "Thêm người dùng thành công!";
