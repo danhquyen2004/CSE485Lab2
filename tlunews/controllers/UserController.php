@@ -12,11 +12,12 @@ class UserController
         // render du lieu lay duoc ra homepage
         include APP_ROOT . '/views/admin/user/index.php';
     }
-    public function login() {
+    public function login()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = trim($_POST['username'] ?? '');
             $password = trim($_POST['password'] ?? '');
-        
+
             if (!empty($username) && !empty($password)) {
                 $userService = new UserService();
                 $user = $userService->login($username, $password);
@@ -39,7 +40,50 @@ class UserController
         } else {
             $errorMessage = "";
         }
-        
+
         require APP_ROOT . '/views/admin/login.php'; // Gọi file login.php để hiển thị form
+    }
+
+    public function create()
+    {
+        include APP_ROOT . '/views/admin/user/add.php';
+    }
+    public function store()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = trim($_POST['username'] ?? '');
+            $password = trim($_POST['password'] ?? '');
+            $confirmPassword = trim($_POST['confirmPassword'] ?? '');
+            $role = intval($_POST['role'] ?? '');
+
+            
+
+            // Kiểm tra dữ liệu nhập vào
+            if (empty($username) || empty($password) || empty($confirmPassword)) {
+                $errorMessage = "Vui lòng nhập đầy đủ thông tin!";
+            } elseif ($password !== $confirmPassword) {
+                $errorMessage = "Mật khẩu và xác nhận mật khẩu không khớp!";
+            } else {
+                try {
+                    // Sử dụng UserService để lưu thông tin
+                    $userService = new UserService();
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Mã hóa mật khẩu
+                    $isStored = $userService->store($username, $hashedPassword, $role);
+
+                    if ($isStored) {
+                        $successMessage = "Thêm người dùng thành công!";
+                    } else {
+                        $errorMessage = "Đã xảy ra lỗi khi thêm người dùng!";
+                    }
+                } catch (Exception $e) {
+                    $errorMessage = "Lỗi: " . $e->getMessage();
+                }
+            }
+        } else {
+            $errorMessage = "";
+            $successMessage = "";
+        }
+
+        require APP_ROOT . '/views/admin/user/add.php';
     }
 }
