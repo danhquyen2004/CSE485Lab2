@@ -79,13 +79,22 @@
             <img src="https://news.khangz.com/wp-content/uploads/2024/12/Chill-guy-la-gi-6.jpg" alt="Logo">
         </div>
         <h3 class="mb-4">TLU NEWS</h3>
-        <form>
+        <form method="POST" action="?controller=user&action=login">
             <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Username" required>
+                <!-- Thêm name="username" -->
+                <input type="text" class="form-control" name="username" placeholder="Username" required>
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" placeholder="Password" required>
+                <!-- Thêm name="password" -->
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
             </div>
+
+            <?php if (!empty($errorMessage)): ?>
+                <div class="alert alert-danger">
+                    <?php echo $errorMessage; ?>
+                </div>
+            <?php endif; ?>
+
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
